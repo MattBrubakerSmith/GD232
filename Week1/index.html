@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 3.2
+-->
+<head>
+	<script>
+		const name = "Matt Smith";
+		const intro = "Once upon a time";
+		const things = [
+			"Occurences",
+			"Events",
+			"Situations",
+			"Trials",
+			"Tribulations",
+			"Both trials and tribulations simultaneously",
+			"Fate",
+			"Happenstance",
+			"Comeuppance",
+			"And last of all, comeuppanstance"
+		];
+
+		const displayName = () => {
+			let nameSpans = document.querySelectorAll(".name-span");
+			nameSpans.forEach(ns => {
+				ns.innerHTML = name;
+			});
+		}
+
+		const displayIntro = () => {
+			document.getElementById("intro-span").innerHTML = intro;
+		}
+
+		const displayThings = () => {
+			things.forEach((thing, i) => {
+				document.getElementById(`list-${i}`).innerHTML = thing;
+			});
+		}
+	</script>
+</head>
+<body>
+	<h1>An Actual Story About <span class="name-span">_______</span>: The Autobiography of <span class="name-span">_______</span></h1>
+	<p style="font-size: smaller;">by <span class="name-span">_______</span></p>
+	<hr />
+	<p>
+		<span id="intro-span">_________</span>, there was a boy named <span class="name-span">_______</span>. That boy was me. He grew up to become a man who's name also happens to be <span class="name-span">_______</span>. That man also happens to be me.
+	</p>
+	<p>
+		Speaking of things that happen to be, things also happen to <em>me</em> and have subsequently <em>happened</em> to me in the past. What sorts of things? Quite a few. I will list some of the things that have happened to me below:
+	</p>
+	<ul>
+		<li id="list-0">______</li>
+		<li id="list-1">______</li>
+		<li id="list-2">______</li>
+		<li id="list-3">______</li>
+		<li id="list-4">______</li>
+		<li id="list-5">______</li>
+		<li id="list-6">______</li>
+		<li id="list-7">______</li>
+		<li id="list-8">______</li>
+		<li id="list-9">______</li>
+	</ul>
+	<p>
+		Well that just about covers it. I hope you enjoyed whatever I just wrote.
+	</p>
+	<p>
+		Happy Birthday,
+	</p>
+	<p style="font-family: 'Comic Sans MS', cursive, sans-serif;">
+		<span class="name-span">_______</span>
+	</p>
+	<button
+		type="button"
+		onClick="displayName()"
+	>
+		Display Name
+	</button>
+	<button
+		type="button"
+		onClick="displayIntro()"
+	>
+		Display Intro
+	</button>
+	<button
+		type="button"
+		onClick="displayThings()"
+	>
+		Display Things List
+	</button>
+</body>
+</html>
