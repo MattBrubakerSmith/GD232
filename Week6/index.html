@@ -13,12 +13,13 @@
 	<h3>First 30 Fibonacci Numbers</h3>
 	<ul id="fibo-list">
 		<li>1 - 0</li>
+		<li>2 - 1</li>
 	</ul>
 	<script type="text/javascript">
 		let prevFiboNum = 0;
 		let currentFiboNum = 1;
 		let fiboList = document.getElementById("fibo-list");
-		for(let i = 2; i <= 30; i++)
+		for(let i = 3; i <= 30; i++)
 		{
 			let tempFiboNum = currentFiboNum;
 			currentFiboNum += prevFiboNum;
