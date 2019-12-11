@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <!--
@@ -20,7 +19,7 @@
 		document.write(
 			"<h1>Smith - Week 4</h1><h2>Parenthesis (Please Excuse Them, Aunt Sally)</h2>" +
 			results.map((res, j) => {
-				return `<p style="width: 500px; clear: both; padding-bottom: 3px;">${j === 0 ? "<em style='float: left;' >Original Result:</em>" : `<span style="float: left;">Alternate Result: ${j}</span>`} <span style="float: right;">${res}</span></p><hr style="width: 500px; float: left; clear: both;" />`;
+				return `<p style="width: 500px; clear: both; padding-bottom: 3px;">${j === 0 ? "<em style='float: left;' >Original Result:</em>" : `<span style="float: left;">Alternate Result ${j}:</span>`} <span style="float: right;">${res}</span></p><hr style="width: 500px; float: left; clear: both;" />`;
 			}).join("")
 		);
 	</script>
