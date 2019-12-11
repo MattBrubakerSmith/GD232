@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 4.1
+-->
+<head>
+	<script>
+		var i = 842;
+		let results = [
+			i + i % 3 / 7 - 2 + 7 ** 3,
+			(i + i) % 3 / 7 - 2 + 7 ** 3,
+			i + i % 3 / (7 - 2) + 7 ** 3,
+			i + i % 3 / (7 - 2 + 7) ** 3,
+			i + i % 3 / 7 - (2 + 7) ** 3,
+			(i + i) % 3 / (7 - 2) + 7 ** 3,
+			i + i % 3 / (7 - (2 + 7)) ** 3
+		];
+		document.write(
+			"<h1>Smith - Week 4</h1><h2>Parenthesis (Please Excuse Them, Aunt Sally)</h2>" +
+			results.map((res, j) => {
+				return `<p style="width: 500px; clear: both; padding-bottom: 3px;">${j === 0 ? "<em style='float: left;' >Original Result:</em>" : `<span style="float: left;">Alternate Result: ${j}</span>`} <span style="float: right;">${res}</span></p><hr style="width: 500px; float: left; clear: both;" />`;
+			}).join("")
+		);
+	</script>
+</head>
+<body>
+</body>
+</html>
