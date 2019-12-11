@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 7.1
+-->
+<head>
+</head>
+<body>
+	<h1>Smith - Week 7</h1>
+	<h2>Favorite Sports Ball&trade; Teams</h2>
+	<h3>Forward Order</h3>
+	<ul id="forward-list"></ul>
+	<h3>Backwards Order</h3>
+	<ul id="backwards-list"></ul>
+	<script type="text/javascript">
+		let favoriteTeams = [
+			"Colorado Crustaceans",
+			"Florida Ice Cream Cones",
+			"Antarctica Amoebas",
+			"Texas Baseball Players",
+			"Oregon Omelettes",
+			"Boston Burnt Sienna Neckties",
+			"Jupiter Moon Monsters",
+			"San Diego Something-or-others",
+			"Washington Predatory Capitalists",
+			"Lousiana Lozenges"
+		];
+
+		const printList = (listNode, array) =>
+		{
+			for(let i = 0; i < array.length; i++)
+			{
+				let li = document.createElement("li");
+				let content = document.createTextNode(array[i]);
+				li.appendChild(content);
+				listNode.appendChild(li);
+			}
+		}
+
+		let forwardList = document.querySelector("#forward-list");
+		let backwardsList = document.querySelector("#backwards-list");
+
+		printList(forwardList, favoriteTeams);
+		printList(backwardsList, favoriteTeams.reverse());
+	</script>
+</body>
+</html>
