@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 8.1
+-->
+<head>
+</head>
+<body>
+	<h1>Smith - Week 8</h1>
+	<h2>Roots n' Squares!</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Initial Value</th>
+				<th>Square Root</th>
+				<th>Power of 2</th>
+				<th>Power of 3</th>
+			</tr>
+		</thead>
+		<tbody id="table-body">
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		let tableBody = document.getElementById("table-body");
+		for(let i = 4; i <= 14; i++)
+		{
+			let row = document.createElement("tr");
+			let initialValueCell = document.createElement("td");
+			let rootCell = document.createElement("td");
+			let squareCell = document.createElement("td");
+			let cubeCell = document.createElement("td");
+			initialValueCell.appendChild(document.createTextNode(i));
+			rootCell.appendChild(document.createTextNode(Math.sqrt(i).toFixed(2)));
+			squareCell.appendChild(document.createTextNode(Math.pow(i, 2)));
+			cubeCell.appendChild(document.createTextNode(Math.pow(i, 3)));
+			row.appendChild(initialValueCell);
+			row.appendChild(rootCell);
+			row.appendChild(squareCell);
+			row.appendChild(cubeCell);
+			tableBody.appendChild(row);
+		}
+	</script>
+	<style>
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 3px;
+		}
+	</style>
+</body>
+</html>
