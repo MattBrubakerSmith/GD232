@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 10.1
+-->
+<head>
+</head>
+<body>
+	<main>
+		<h1>Smith - Week 10</h1>
+		<h2>User Event-a-palooza!</h2>
+		<div
+			id="creepy-willem"
+		>
+			<h3>Make Willem Less Creepy! <span style="font-size: smaller;">(If Possible!)</span></h3>
+			<p>
+				Select an <em>Event Type</em> and <em>Image Filter</em> to apply them to Mr. Dafoe's beautiful face in a futile attempt to even marginally decrease his creepiness!
+			</p>
+			<div>
+				<div>
+					<img
+						id="the-image"
+						src="https://media1.tenor.com/images/26d30713f351871fe54af586c853acc3/tenor.gif?itemid=8186718"
+					/>
+				</div>
+				<div>
+					<h4>Select Event Type</h4>
+					<select
+						id="event-selector"
+						onchange="selectEvent(this.value)"
+					>
+						<option
+							value=""
+							selected
+							disabled
+						>
+							Select Event
+						</option>
+					</select>
+				</div>
+				<div>
+					<h4>Select Filter</h4>
+					<select
+						id="filter-selector"
+						onchange="selectFilter(this.value)"
+					>
+						<option
+							value=""
+							selected
+							disabled
+						>
+							Select Filter
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div
+			id="cwazy-inputs"
+		>
+			<h3>Cwazy Inputz</h3>
+			<label
+				for="type-size-changer-input"
+			>
+			Cwazy Type Size:&nbsp;
+			</label>
+			<input
+				id="type-size-changer-input"
+				type="text"
+				onkeyup="populateSizeChanger(this.value)"
+			/>
+			<p
+				id="type-size-changer"
+			>
+			</p>
+			<label
+				for="type-color-changer-input"
+			>
+			Cwazy Type Color:&nbsp;
+			</label>
+			<input
+				id="type-color-changer-input"
+				type="text"
+				onkeyup="populateColorChanger(this.value)"
+			/>
+			<p
+				id="type-color-changer"
+			>
+			</p>
+		</div>
+		<div
+			id="cwazy-event-buttons"
+		>
+			<h3>Pointless Page Party</h3>
+			<button
+				onclick="flipPageY()"
+			>
+				Flip Entire Page Horizontally
+			</button>
+			<button
+				onclick="flipPageX()"
+			>
+				Flip Entire Page Vertically
+			</button>
+		</div>
+	</main>
+	<script
+		type="text/javascript"
+	>
+		let page = document.querySelector("main");
+		let typeSizeChanger = document.getElementById("type-size-changer");
+		let typeColorChanger = document.getElementById("type-color-changer");
+		let eventSelector = document.getElementById("event-selector");
+		let filterSelector = document.getElementById("filter-selector");
+		let image = document.getElementById("the-image");
+		let currentFilter = null;
+		let currentEvent = null;
+
+		const eventOptions = [
+			{ label: "Click", value: "onclick" },
+			{ label: "Mouse Over (Start Hover)", value: "onmouseover" },
+			{ label: "Mouse Out (End Hover)", value: "onmouseout" },
+			{ label: "Mouse Wheel (While Hovering)", value: "onwheel" }
+		];
+
+		const filterOptions = [
+			{ label: "Blur", value: "blur" },
+			{ label: "Brighten", value: "brighten" },
+			{ label: "Contrast (Increase)", value: "contrast-up" },
+			{ label: "Contrast (Decrease)", value: "contrast-down" },
+			{ label: "Darken", value: "darken" },
+			{ label: "Drop Shadow", value: "shadow" },
+			{ label: "Grayscale", value: "gray" },
+			{ label: "Invert", value: "invert" },
+			{ label: "Opacity", value: "opacity" },
+			{ label: "Saturate", value: "saturate" },
+			{ label: "Sepia", value: "sepia" }
+		];
+
+		window.onload = () => {
+			eventOptions.forEach(eo =>
+			{
+				let opt = document.createElement("option");
+				opt.value = eo.value;
+				opt.appendChild(document.createTextNode(eo.label));
+				eventSelector.appendChild(opt);
+			});
+			filterOptions.forEach(fo =>
+			{
+				let opt = document.createElement("option");
+				opt.value = fo.value;
+				opt.appendChild(document.createTextNode(fo.label));
+				filterSelector.appendChild(opt);
+			});
+		}
+
+		const flipPageY = () =>
+		{
+			if(page.classList.contains("flip-over-both"))
+			{
+				page.classList.remove("flip-over-both");
+				page.classList.add("flip-over-x");
+			}
+
+			if(page.classList.contains("flip-over-y"))
+			{
+				page.classList.remove("flip-over-y");
+			}
+			else
+			{
+				if(page.classList.contains("flip-over-x"))
+				{
+					page.classList.add("flip-over-both");
+				}
+				else
+				{
+					page.classList.add("flip-over-y");
+				}
+			}
+		}
+
+		const flipPageX = () =>
+		{
+			if(page.classList.contains("flip-over-both"))
+			{
+				page.classList.remove("flip-over-both");
+				page.classList.add("flip-over-y");
+			}
+
+			if(page.classList.contains("flip-over-x"))
+			{
+				page.classList.remove("flip-over-x");
+			}
+			else
+			{
+				if(page.classList.contains("flip-over-y"))
+				{
+					page.classList.add("flip-over-both");
+				}
+				else
+				{
+					page.classList.add("flip-over-x");
+				}
+			}
+		}
+
+		const populateSizeChanger = input =>
+		{
+			if(typeSizeChanger.childNodes[0])
+			{
+				typeSizeChanger.removeChild(typeSizeChanger.childNodes[0]);
+			}
+			if(input && input.length > 0)
+			{
+				let currentEl = typeSizeChanger;
+				for(let i = 0; i < input.length; i++)
+				{
+					let span = document.createElement("span");
+					span.appendChild(document.createTextNode(input[i]));
+					currentEl.appendChild(span);
+					currentEl = span;
+				}
+			}
+		}
+
+		const populateColorChanger = input =>
+		{
+			if(typeColorChanger.childNodes[0])
+			{
+				typeColorChanger.removeChild(typeColorChanger.childNodes[0]);
+			}
+			if(input && input.length > 0)
+			{
+				let currentEl = typeColorChanger;
+				for(let i = 0; i < input.length; i++)
+				{
+					let span = document.createElement("span");
+					span.appendChild(document.createTextNode(input[i]));
+					span.style.color = `rgb(${Math.random() * Math.floor(255)},${Math.random() * Math.floor(255)},${Math.random() * Math.floor(255)})`;
+					currentEl.appendChild(span);
+					currentEl = span;
+				}
+			}
+		}
+
+		const selectEvent = event =>
+		{
+			currentEvent = event;
+			if(currentFilter) applyFilterEvent();
+		}
+
+		const selectFilter = filter =>
+		{
+			currentFilter = filter;
+			if(currentEvent) applyFilterEvent();
+		}
+
+		const applyFilterEvent = () =>
+		{
+			image.classList.forEach(c =>
+			{
+				image.classList.remove(c);
+			});
+			eventOptions.forEach(eo =>
+			{
+				image[eo.value] = null;
+			});
+			image[currentEvent] = () =>
+			{
+				image.classList.add(`${currentFilter}-filter`);
+			}
+		}
+	</script>
+	<style>
+		main {
+			width: 1200px;
+			max-width: 100%;
+			margin: 0 auto;
+			padding-bottom: 50px;
+			transition: transform 500ms ease-out;
+		}
+
+		.flip-over-y {
+			-webkit-transform: rotateY(180deg) perspective(500px);
+			-moz-transform: rotateY(180deg) perspective(500px);
+			-o-transform: rotateY(180deg) perspective(500px);
+			transform: rotateY(180deg) perspective(500px);
+		}
+
+		.flip-over-x {
+			-webkit-transform: rotateX(180deg) perspective(500px);
+			-moz-transform: rotateX(180deg) perspective(500px);
+			-o-transform: rotateX(180deg) perspective(500px);
+			transform: rotateX(180deg) perspective(500px);
+		}
+
+		.flip-over-both {
+			-webkit-transform: rotateX(180deg) rotateY(180deg) perspective(500px);
+			-moz-transform: rotateX(180deg) rotateY(180deg) perspective(500px);
+			-o-transform: rotateX(180deg) rotateY(180deg) perspective(500px);
+			transform: rotateX(180deg) rotateY(180deg) perspective(500px);
+		}
+
+		#type-size-changer span{
+			font-size: 110%;
+		}
+
+		#creepy-willem {
+			width: 100%;
+		}
+
+		#creepy-willem > div {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		#creepy-willem > div > div:not(:first-of-type) {
+			padding-left: 5em;
+		}
+
+		#creepy-willem div img {
+			width: 25em;
+			max-width: 100%;
+			cursor: pointer;
+		}
+
+		.blur-filter {
+			-webkit-filter: blur(1);
+			-moz-filter: blur(1);
+			-ms-filter: blur(1);
+			-o-filter: blur(1);
+			filter: blur(1);
+		}
+
+		.brighten-filter {
+			-webkit-filter: brightness(1.5);
+			-moz-filter: brightness(1.5);
+			-ms-filter: brightness(1.5);
+			-o-filter: brightness(1.5);
+			filter: brightness(1.5);
+		}
+
+		.contrast-up-filter {
+			-webkit-filter: contrast(1.5);
+			-moz-filter: contrast(1.5);
+			-ms-filter: contrast(1.5);
+			-o-filter: contrast(1.5);
+			filter: contrast(1.5);
+		}
+
+		.contrast-down-filter {
+			-webkit-filter: contrast(.5);
+			-moz-filter: contrast(.5);
+			-ms-filter: contrast(.5);
+			-o-filter: contrast(.5);
+			filter: contrast(.5);
+		}
+
+		.darken-filter {
+			-webkit-filter: brightness(.5);
+			-moz-filter: brightness(.5);
+			-ms-filter: brightness(.5);
+			-o-filter: brightness(.5);
+			filter: brightness(.5);
+		}
+
+		.shadow-filter {
+			-webkit-filter: drop-shadow(8px 8px 10px gray);
+			-moz-filter: drop-shadow(8px 8px 10px gray);
+			-ms-filter: drop-shadow(8px 8px 10px gray);
+			-o-filter: drop-shadow(8px 8px 10px gray);
+			filter: drop-shadow(8px 8px 10px gray);
+		}
+
+		.gray-filter {
+			-webkit-filter: grayscale(1);
+			-moz-filter: grayscale(1);
+			-ms-filter: grayscale(1);
+			-o-filter: grayscale(1);
+			filter: grayscale(1);
+		}
+
+		.invert-filter {
+			-webkit-filter: invert(1);
+			-moz-filter: invert(1);
+			-ms-filter: invert(1);
+			-o-filter: invert(1);
+			filter: invert(1);
+		}
+
+		.opacity-filter {
+			-webkit-filter: opacity(.5);
+			-moz-filter: opacity(.5);
+			-ms-filter: opacity(.5);
+			-o-filter: opacity(.5);
+			filter: opacity(.5);
+		}
+
+		.saturate-filter {
+			-webkit-filter: saturate(8);
+			-moz-filter: saturate(8);
+			-ms-filter: saturate(8);
+			-o-filter: saturate(8);
+			filter: saturate(8);
+		}
+
+		.sepia-filter {
+			-webkit-filter: sepia(1);
+			-moz-filter: sepia(1);
+			-ms-filter: sepia(1);
+			-o-filter: sepia(1);
+			filter: sepia(1);
+		}
+
+	</style>
+</body>
+</html>
