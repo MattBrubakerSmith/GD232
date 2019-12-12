@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	Matthew Smith
+	Assignment 9.1
+-->
+<head>
+</head>
+<body>
+	<h1>Smith - Week 9</h1>
+	<h2>Arrayz 4 Dayz</h2>
+	<section
+		id="user-input-section"
+	>
+		<div
+			id="user-input-container"
+		>
+			<label
+				for="number-input"
+			>
+				Enter a Number:
+			</label>
+			<input
+				name="number-input"
+				id="number-input"
+				type="number"
+				onkeyup="setNumber(this.value)"
+			/>
+			<div
+				id="button-container"
+			>
+				<button
+					id="add-number-button"
+					onclick="addNumber()"
+					disabled
+				>
+					Add Number
+				</button>
+				<button
+					id="sort-numbers-button"
+					onclick="counter()"
+					disabled
+				>
+					Sort Numbers
+				</button>
+				<button
+					id="reset-button"
+					onclick="reset()"
+					disabled
+				>
+					Reset
+				</button>
+			</div>
+		</div>
+		<div
+			id="selected-number-list-container"
+		>
+			<h4>Selected Numbers</h4>
+			<ul
+				id="number-list"
+			>
+			</ul>
+		</div>
+	</section>
+	<section
+		id="sorted-list-section"
+	>
+		<div>
+			<h4>Negative Numbers</h4>
+			<ul
+				id="negative-number-list"
+			>
+			</ul>
+		</div>
+		<div>
+			<h4>Positive Numbers</h4>
+			<ul
+				id="positive-number-list"
+			>
+			</ul>
+		</div>
+		<div>
+			<h4>Zeroiest Numbers</h4>
+			<ul
+				id="zero-list"
+			>
+			</ul>
+		</div>
+	</section>
+	<script
+		type="text/javascript"
+	>
+		let currentNumber = null;
+		let numberList = [];
+		let numberListNode = document.getElementById("number-list");
+		let negativeNumberListNode = document.getElementById("negative-number-list");
+		let positiveNumberListNode = document.getElementById("positive-number-list");
+		let zeroListNode = document.getElementById("zero-list");
+		let numberInput = document.getElementById("number-input");
+		let addNumberButton = document.getElementById("add-number-button");
+		let sortNumbersButton = document.getElementById("sort-numbers-button");
+		let resetButton = document.getElementById("reset-button");
+		let sortedListSection = document.getElementById("sorted-list-section");
+
+		const setNumber = value =>
+		{
+			currentNumber = value != "" ? parseFloat(value) : null;
+			if(currentNumber === null)
+			{
+				addNumberButton.disabled = true;
+			}
+			else
+			{
+				addNumberButton.disabled = false;
+			}
+		}
+
+		const addNumber = () =>
+		{
+			if(currentNumber !== null)
+			{
+				numberList.push(currentNumber);
+				let li = document.createElement("li");
+				li.appendChild(document.createTextNode(currentNumber));
+				numberListNode.appendChild(li);
+			}
+			if(numberList.length > 0)
+			{
+				sortNumbersButton.disabled = false;
+			}
+			numberInput.value = "";
+			currentNumber = null;
+			addNumberButton.disabled = true;
+		}
+
+		const counter = () =>
+		{
+			numberList.forEach(n =>
+			{
+				let li = document.createElement("li");
+				li.appendChild(document.createTextNode(n));
+				if(n === 0)
+				{
+					zeroListNode.appendChild(li);
+				}
+				else if(n < 0)
+				{
+					negativeNumberListNode.appendChild(li);
+				}
+				else
+				{
+					positiveNumberListNode.appendChild(li);
+				}
+			});
+			clearSelectedNumbers();
+			sortedListSection.style.display = "flex";
+			resetButton.disabled = false;
+			numberInput.disabled = true;
+		}
+
+		const clearSelectedNumbers = () =>
+		{
+				currentNumber = null;
+				numberList = [];
+				numberListNode.querySelectorAll("*").forEach(li => li.remove());
+		}
+
+		const reset = () =>
+		{
+			addNumberButton.disabled = true;
+			sortNumbersButton.disabled = true;
+			resetButton.disabled = true;
+			numberInput.disabled = false;
+			numberInput.value = "";
+			clearSelectedNumbers();
+			negativeNumberListNode.querySelectorAll("*").forEach(li => li.remove());
+			positiveNumberListNode.querySelectorAll("*").forEach(li => li.remove());
+			zeroListNode.querySelectorAll("*").forEach(li => li.remove());
+			sortedListSection.style.display = "none";
+		}
+	</script>
+	<style>
+		#user-input-section {
+			width: 400px;
+			max-width: 100%;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+		}
+
+		#user-input-container {
+			width: 60%;
+			margin-top: 20px;
+			padding-right: 20px;
+			box-sizing: border-box;
+		}
+
+		#number-list {
+			height: 100px;
+			border: 1px solid black;
+			overflow-y: scroll;
+		}
+
+		#button-container {
+			width: 100%;
+			margin-top: 20px;
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		ul {
+			list-style-type: none;
+			padding: 0px;
+			text-align: center;
+		}
+
+		input {
+			width: 100%;
+			margin-top: 5px;
+		}
+
+		button {
+			margin-bottom: 5px;
+		}
+
+		#sorted-list-section {
+			width: 400px;
+			max-width: 100%;
+			display: none;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+	</style>
+</body>
+</html>
